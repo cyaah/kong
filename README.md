@@ -4,7 +4,7 @@
 
 # **Kong Services API**
 
-This project implements a **Services API** using **NestJS** with **TypeORM** and **PostgreSQL**, designed to showcase essential backend development concepts like filtering, sorting, pagination, and testing.
+This project implements a **Services API** using **NestJS** with **TypeORM** and **PostgreSQL**
 
 ## **Features**
 
