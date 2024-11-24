@@ -1,73 +1,132 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+### **README.md**
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+---
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+# **Kong Services API**
 
-## Description
+This project implements a **Services API** using **NestJS** with **TypeORM** and **PostgreSQL**, designed to showcase essential backend development concepts like filtering, sorting, pagination, and testing.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## **Features**
 
-## Installation
+- **Get Services**:
+  - Supports filtering by any field, sorting, and pagination.
+- **Get Service by ID**:
+  - Includes all versions of the service inline.
+- **Database Seeding**:
+  - Populates the database with mock data for testing.
+- **Testing**:
+  - Essential tests for controller and service layers using **Jest**.
 
-```bash
-$ npm install
+---
+
+## **Tech Stack**
+
+- **Node.js**: Backend runtime.
+- **NestJS**: Framework for building scalable server-side applications.
+- **TypeORM**: ORM for database operations.
+- **PostgreSQL**: Database for persistent storage.
+- **Docker**: For containerized deployment.
+
+---
+
+## **Setup Instructions**
+
+### **Prerequisites**
+Ensure the following are installed on your machine:
+- **Docker**: [Install Docker](https://www.docker.com/get-started)
+
+---
+
+### **Steps to Run**
+
+1. **Clone the Repository**:
+   ```bash
+   git clone <repository-url>
+   cd <repository-name>
+   ```
+
+2. **Start the App with Docker**:
+   - Build and start the Docker containers:
+     ```bash
+     docker-compose up --build
+     ```
+   - This will spin up the following:
+     - The NestJS application (`http://localhost:3000`)
+     - PostgreSQL database (`localhost:5432`)
+
+3. **Verify the App**:
+   - The app will be available at `http://localhost:3000`.
+
+---
+
+## **Seeding the Database**
+
+To populate the database with mock data:
+
+1. Run the seeding script inside the app container:
+   ```bash
+   docker exec -it kong_app npx ts-node src/database/seed.ts
+   ```
+2. Verify the data:
+   - Use a database tool like **pgAdmin** or **DBeaver**.
+   - Connect with:
+     - **Host**: `localhost`
+     - **Port**: `5432`
+     - **Username**: `kong`
+     - **Password**: `kong`
+     - **Database**: `kong`
+
+---
+
+## **Endpoints**
+
+### **1. Get All Services**
+- **URL**: `GET /services`
+- **Query Parameters**:
+  - `filterField` (optional): Field to filter (e.g., `name` or `description`).
+  - `filterValue` (optional): Value to filter by.
+  - `sortBy` (optional): Field to sort by (default: `name`).
+  - `order` (optional): Sorting order (`asc` or `desc`, default: `asc`).
+  - `page` (optional): Page number (default: `1`).
+  - `limit` (optional): Number of results per page (default: `10`).
+
+**Example**:
+```http
+GET http://localhost:3000/services?filterField=name&filterValue=Service A&sortBy=name&order=asc&page=1&limit=5
 ```
 
-## Running the app
+---
 
-```bash
-# development
-$ npm run start
+### **2. Get Service by ID**
+- **URL**: `GET /services/:id`
+- **Path Parameter**: 
+  - `id`: Service ID.
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+**Example**:
+```http
+GET http://localhost:3000/services/1
 ```
 
-## Test
+---
 
-```bash
-# unit tests
-$ npm run test
+## **Testing**
 
-# e2e tests
-$ npm run test:e2e
+### **Run Tests**
+Run the test suite using Jest:
+1. **Inside the Docker Container**:
+   ```bash
+   docker exec -it kong_app npm run test
+   ```
+2. **Clear Jest Cache (if needed)**:
+   ```bash
+   docker exec -it kong_app npm run test -- --clearCache
+   ```
 
-# test coverage
-$ npm run test:cov
-```
+### **Test Coverage**
+The test suite covers:
+- **Controller Layer**:
+  - Fetch all services (`GET /services`).
+  - Fetch a specific service by ID (`GET /services/:id`).
+- **Service Layer**:
+  - Validates business logic for filtering, sorting, and pagination.
 
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
