@@ -21,13 +21,11 @@ This project implements a **Services API** using **NestJS** with **TypeORM** and
 
 ## **Tech Stack**
 
-- **Node.js**: Backend runtime.
-- **NestJS**: Framework for building scalable server-side applications.
-- **TypeORM**: ORM for database operations.
-- **PostgreSQL**: Database for persistent storage.
-- **Docker**: For containerized deployment.
-
----
+- **Node.js** 
+- **NestJS** 
+- **TypeORM**
+- **PostgreSQL** 
+- **Docker**
 
 ## **Setup Instructions**
 
@@ -41,8 +39,8 @@ Ensure the following are installed on your machine:
 
 1. **Clone the Repository**:
    ```bash
-   git clone <repository-url>
-   cd <repository-name>
+   git clone https://github.com/cyaah/kong
+   cd kong
    ```
 
 2. **Start the App with Docker**:
@@ -121,12 +119,3 @@ Run the test suite using Jest:
    ```bash
    docker exec -it kong_app npm run test -- --clearCache
    ```
-
-### **Test Coverage**
-The test suite covers:
-- **Controller Layer**:
-  - Fetch all services (`GET /services`).
-  - Fetch a specific service by ID (`GET /services/:id`).
-- **Service Layer**:
-  - Validates business logic for filtering, sorting, and pagination.
-

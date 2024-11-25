@@ -21,8 +21,13 @@ export class SeedService {
       { name: 'Service A', description: 'Handles email notifications' },
       { name: 'Service B', description: 'Processes payment transactions' },
       { name: 'Service C', description: 'Manages user authentication' },
-      { name: 'Service D', description: 'Provides analytics' },
+      { name: 'Service D', description: 'Provides analytics and insights' },
       { name: 'Service E', description: 'Handles real-time messaging' },
+      { name: 'Service F', description: 'Monitors system health' },
+      { name: 'Service G', description: 'Automates workflows' },
+      { name: 'Service H', description: 'Offers cloud storage solutions' },
+      { name: 'Service I', description: 'Provides API gateway functionality' },
+      { name: 'Service J', description: 'Facilitates team collaboration' },
     ];
 
     const savedServices = await this.serviceRepository.save(services);
@@ -32,6 +37,7 @@ export class SeedService {
       { version_number: `${1 + index}.0.0`, service },
       { version_number: `${1 + index}.1.0`, service },
       { version_number: `${1 + index}.2.0`, service },
+      { version_number: `${1 + index}.3.0`, service },
     ]);
 
     await this.versionRepository.save(versions);

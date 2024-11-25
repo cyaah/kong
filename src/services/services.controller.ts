@@ -14,7 +14,19 @@ export class ServicesController {
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 10,
   ) {
-    return this.servicesService.getServices(filterField, filterValue, sortBy, order, page, limit);
+    const [data, total] = await this.servicesService.getServices(
+      filterField,
+      filterValue,
+      sortBy,
+      order,
+      page,
+      limit,
+    );
+    
+    return {
+      data,
+      total,
+    };
   }
 
   @Get(':id')
